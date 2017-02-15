@@ -1,38 +1,22 @@
 import java.util.ArrayList;
 
-class HasKey_{
-    private Integer key;
+public class MinHeap<E extends HasKey> {
 
-    public HasKey_(int key) {
-        this.key = key;
-    }
-
-    public int getKey(){
-        return this.key;
-    }
-
-    public String toString(){
-        return key.toString();
-    }
-}
-
-public class MinHeap {
-
-    private ArrayList<HasKey_> heap = new ArrayList<>();
+    private ArrayList<E> heap = new ArrayList<>();
 
     public MinHeap(){
         // no initialization data.
     }
 
     // Takes O(nlgn) time.
-    public MinHeap(HasKey_ data[]){
-        for(HasKey_ i: data){
+    public MinHeap(E data[]){
+        for(E i: data){
             insert(i);
         }
     }
 
     // Takes O(lgn) time.
-    private void insert(HasKey_ data){
+    private void insert(E data){
         heap.add(data);
         buildMinHeapify(heap.size() - 1);
     }
@@ -52,7 +36,7 @@ public class MinHeap {
         // If the new node is less than the parent, than it is also less than any of the children's parents.
         // We can therefore swap the parent and the new node.
         if(heap.get(parent).getKey() > heap.get(i).getKey()){
-            HasKey_ temp = heap.get(parent);
+            E temp = heap.get(parent);
             heap.set(parent, heap.get(i));
             heap.set(i, temp);
 
@@ -77,7 +61,7 @@ public class MinHeap {
 
         // If the children are smaller we need to swap and recurse upwards.
         if(smallest != i){
-            HasKey_ temp = heap.get(smallest);
+            E temp = heap.get(smallest);
             heap.set(smallest, heap.get(i));
             heap.set(i, temp);
 
@@ -86,11 +70,11 @@ public class MinHeap {
     }
 
     // To extract the min it takes O(lgn) time since we need to min-heapify the root.
-    private HasKey_ extractMin(){
+    private E extractMin(){
         int last = heap.size() - 1;
 
         // Swap with min with the end, remove the end, and min-heapify the root.
-        HasKey_ min = heap.get(0);
+        E min = heap.get(0);
         heap.set(0, heap.get(last));
         heap.set(last, min);
         heap.remove(last);
@@ -100,7 +84,7 @@ public class MinHeap {
     }
 
     // Viewing the min takes O(1).
-    private HasKey_ getMin(){
+    private E getMin(){
         return heap.get(0);
     }
 
@@ -111,24 +95,24 @@ public class MinHeap {
 
 
     public static void main(String[] args) {
-        HasKey_ data[] = {new HasKey_(532),
-                new HasKey_(3),
-                new HasKey_(12),
-                new HasKey_(1592),
-                new HasKey_(531),
-                new HasKey_(52),
-                new HasKey_(1),
-                new HasKey_(902),
-                new HasKey_(5222),
-                new HasKey_(67)
+        HasKey data[] = {new HasKey(532),
+                new HasKey(3),
+                new HasKey(12),
+                new HasKey(1592),
+                new HasKey(531),
+                new HasKey(52),
+                new HasKey(1),
+                new HasKey(902),
+                new HasKey(5222),
+                new HasKey(67)
         };
 
         // A few tests.
-        MinHeap test = new MinHeap(data);
+        MinHeap<HasKey> test = new MinHeap(data);
         System.out.println(test);
         System.out.println(test.extractMin());
         System.out.println(test);
-        test.insert(new HasKey_(-39));
+        test.insert(new HasKey(-39));
         System.out.println(test);
 
     }
