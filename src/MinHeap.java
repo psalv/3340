@@ -16,7 +16,7 @@ public class MinHeap<E extends HasKey> {
     }
 
     // Takes O(lgn) time.
-    private void insert(E data){
+    public void insert(E data){
         heap.add(data);
         buildMinHeapify(heap.size() - 1);
     }
@@ -70,7 +70,7 @@ public class MinHeap<E extends HasKey> {
     }
 
     // To extract the min it takes O(lgn) time since we need to min-heapify the root.
-    private E extractMin(){
+    public E extractMin(){
         int last = heap.size() - 1;
 
         // Swap with min with the end, remove the end, and min-heapify the root.
@@ -84,7 +84,7 @@ public class MinHeap<E extends HasKey> {
     }
 
     // Viewing the min takes O(1).
-    private E getMin(){
+    public E getMin(){
         return heap.get(0);
     }
 
