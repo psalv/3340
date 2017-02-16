@@ -48,7 +48,7 @@ public class MinHeap<E extends HasKey> {
     // Takes O(lgn) time.
     private void minHeapify(int i){
         int left = 2*i + 1;
-        int right = left + 2;
+        int right = 2*i + 2;
         int size = heap.size() - 1;
 
         if(left > size){
@@ -57,7 +57,10 @@ public class MinHeap<E extends HasKey> {
 
         // Need to determine the smallest element between i and it's two children
         int smallest = heap.get(left).getKey() < heap.get(i).getKey() ? left : i;
-        smallest = heap.get(left).getKey() < heap.get(smallest).getKey() ? right : smallest;
+
+        if(right <= size) {
+            smallest = heap.get(right).getKey() < heap.get(smallest).getKey() ? right : smallest;
+        }
 
         // If the children are smaller we need to swap and recurse upwards.
         if(smallest != i){
@@ -86,6 +89,10 @@ public class MinHeap<E extends HasKey> {
     // Viewing the min takes O(1).
     public E getMin(){
         return heap.get(0);
+    }
+
+    public boolean isEmpty(){
+        return heap.size() == 0;
     }
 
     public String toString(){
