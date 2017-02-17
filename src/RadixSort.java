@@ -1,35 +1,20 @@
 import java.util.ArrayList;
 import java.util.Iterator;
 
-class HasKey{
-    private Integer key;
-
-    public HasKey(int key) {
-        this.key = key;
-    }
-
-    public int getKey(){
-        return this.key;
-    }
-
-    public String toString(){
-        return key.toString();
-    }
-}
 
 
 public class RadixSort {
 
-    public static void RadixSort(int digits, HasKey data[]) {
+    public static <E extends HasKey> void RadixSort(int digits, E data[]) {
 
         boolean DEBUG = true;
 
-        ArrayList<HasKey> sorted[] = new ArrayList[10];
-        ArrayList<HasKey> pointer[];
+        ArrayList<E> sorted[] = new ArrayList[10];
+        ArrayList<E> pointer[];
         boolean first = true;
         for (int i = 0; i < digits; i++) {
             if (first) {
-                for (HasKey k : data) {
+                for (E k : data) {
                     int key = k.getKey() % 10;
 
                     if (sorted[key] == null) {
@@ -44,9 +29,9 @@ public class RadixSort {
 
                 for (int j = 0; j < 10; j++) {
                     if (sorted[j] != null) {
-                        Iterator<HasKey> iter = sorted[j].iterator();
+                        Iterator<E> iter = sorted[j].iterator();
                         while (iter.hasNext()) {
-                            HasKey k = iter.next();
+                            E k = iter.next();
                             int key = (int) (k.getKey() / (Math.pow(10, i))) % 10;
 
                             if (pointer[key] == null) {
