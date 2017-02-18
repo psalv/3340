@@ -31,14 +31,14 @@ class UnionFindNode<E>{
 
 public class UnionFind <E>{
 
-    private E sets[];
+    private UnionFindNode<E> sets[];
 
     private boolean finalized = false;
 
 
 
     public void uandf(int n){
-        sets = (E[]) new Object[n];
+        sets = new UnionFindNode[n];
         System.out.println(Arrays.toString(sets));
     }
 
