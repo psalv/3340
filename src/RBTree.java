@@ -1,4 +1,11 @@
 
+
+// THIS DATA STRUCTURE IS INCOMPLETE.
+
+
+// TODO: Write out every case for insertion and deletion, and ensure that they are covered.
+// TODO: Implement rotations
+
 class RBNode{
     public static enum COLOR {RED, BLACK}
 
@@ -119,6 +126,9 @@ public class RBTree {
         cur.getParent().getParent().setColor(RBNode.COLOR.RED);
 
         redPropogation(cur.getParent().getParent());
+
+        // The root must always be black.
+        root.setColor(RBNode.COLOR.BLACK);
     }
 
     public void insert(Integer val){
@@ -154,10 +164,11 @@ public class RBTree {
 
     public void inOrder(){
         print(root.getLeftChild());
-        System.out.println("\nVal: " + root + "\nBH: " + BH(root) + "\nColor: " + root.getColor());
+        System.out.println("\nROOT\nVal: " + root + "\nBH: " + BH(root) + "\nColor: " + root.getColor());
         print(root.getRightChild());
     }
 
+    // An in order visit method.
     public void print(RBNode cur){
         if(cur.getValue() == null){
             return;
