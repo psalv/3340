@@ -3,16 +3,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
 
+// A class to store information necessary for UnionFind to function.
 class UnionFindNode<E>{
 
+    // A head which points to the path to a representative for a set.
+    // A class with a head pointer to itself indicates that the representative for this set is it's own value.
     private UnionFindNode head;
     private E value;
     private int rank = 1;
-    private int rep;
+    private boolean representative = false;
 
     public UnionFindNode(E value) {
         this.value = value;
         this.head = this;
+    }
+
+    public UnionFindNode(E value, boolean rep) {
+        this.value = value;
+        this.head = this;
+        this.representative = true;
     }
 
     public E getValue() {
@@ -35,27 +44,20 @@ class UnionFindNode<E>{
         this.rank = rank;
     }
 
-    public int getRep() {
-        return rep;
-    }
-
-    public void setRep(int rep) {
-        this.rep = rep;
-    }
-
     public int hashCode(){
         return value.hashCode();
     }
 
     public String toString(){
-        return "\nNode:  " + value.toString() + "\nClass: " + head.getValue().toString() + "\nRank: " + this.rank;
+        String rep = representative ? " REPRESENTATIVE NODE" : "";
+        return "\nNode:  " + value.toString() + "\nClass: " + head.getValue().toString() + rep + "\nRank: " + this.rank;
     }
 }
 
 
 public class UnionFind <E>{
 
-    private UnionFindNode<E> sets[];
+    private UnionFindNode sets[];
 
     // Retrieve indices that were assigned to generic type objects.
     private HashMap<E, Integer> indices = new HashMap<>();
@@ -99,8 +101,8 @@ public class UnionFind <E>{
             }
 
             // Retrieve the representatives from each of the sets contained i and j
-            UnionFindNode<E> iHead = getVeryHead(sets[indexI]);
-            UnionFindNode<E> jHead = getVeryHead(sets[indexJ]);
+            UnionFindNode iHead = getVeryHead(sets[indexI]);
+            UnionFindNode jHead = getVeryHead(sets[indexJ]);
 
             // We always make the smaller set point to the larger to reduce the size of the tree.
             // We adjust the rank in order to tell the relative tree sizes for future operations.
@@ -116,10 +118,10 @@ public class UnionFind <E>{
         }
     }
 
-    private UnionFindNode<E> getVeryHead(UnionFindNode<E> n){
+    private UnionFindNode getVeryHead(UnionFindNode n){
 
         // Keep track of the path up to the head so we can do compression later.
-        Stack<UnionFindNode<E>> path = new Stack<>();
+        Stack<UnionFindNode> path = new Stack<>();
 
         // We follow head pointers until we find a node pointing to itself, indicating that this is the representative.
         while(n.getHead() != n){
@@ -145,27 +147,25 @@ public class UnionFind <E>{
         return getVeryHead(sets[index]);
     }
 
-//    private
-
     public int final_sets(){
 
         // We finalize the union-find such that no more changes can occur.
         finalized = true;
-        HashMap<UnionFindNode<E>, ArrayList<UnionFindNode<E>>> foundSets = new HashMap<>();
+        HashMap<UnionFindNode, ArrayList<UnionFindNode>> foundSets = new HashMap<>();
 
         // Determining how manny different sets there are
-        for(UnionFindNode<E> e: sets){
+        for (UnionFindNode e : sets) {
 
             // Sets does not necessarily need to be full, this avoids a NullPointerException.
-            if(e == null){
+            if (e == null) {
                 break;
             }
 
             // We use the representative from each node, inspecting if it has already been seen,
             // if so we add our element to the representatives list of children, otherwise we have found
             // a new representative and create a new list for it's children.
-            UnionFindNode<E> head = getVeryHead(e);
-            if(!foundSets.containsKey(head)){
+            UnionFindNode head = getVeryHead(e);
+            if (!foundSets.containsKey(head)) {
                 foundSets.put(head, new ArrayList<>());
             }
             foundSets.get(head).add(e);
@@ -174,9 +174,9 @@ public class UnionFind <E>{
 
         // We need to go through each set and reset their representatives to be integers.
         int i = numSets;
-        for(UnionFindNode<E> key: foundSets.keySet()){
-            UnionFindNode<Integer> newRepresentative = new UnionFindNode<>(i--);
-            for(UnionFindNode<E> val: foundSets.get(key)){
+        for (UnionFindNode key : foundSets.keySet()) {
+            UnionFindNode<Integer> newRepresentative = new UnionFindNode<>(i--, true);
+            for (UnionFindNode val : foundSets.get(key)) {
                 val.setHead(newRepresentative);
             }
         }
@@ -187,7 +187,7 @@ public class UnionFind <E>{
 
     public String toString(){
         String toReturn = "";
-        for(UnionFindNode<E> e: sets){
+        for(UnionFindNode e: sets){
             if(e == null){
                 break;
             }
@@ -213,6 +213,9 @@ public class UnionFind <E>{
         test.union_sets(3, 25);
 //        System.out.println(test);
         test.final_sets();
+        test.final_sets();
         System.out.println(test);
+
+        System.out.println(test.find_set(25));
     }
 }
