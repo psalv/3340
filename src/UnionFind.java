@@ -3,6 +3,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
 
+class UnionFindException extends Exception{
+    public UnionFindException(String s){
+        super(s);
+    }
+}
+
 // A class to store information necessary for UnionFind to function.
 class UnionFindNode<E>{
 
@@ -48,6 +54,8 @@ class UnionFindNode<E>{
         return value.hashCode();
     }
 
+
+    // todo
     public String toString(){
         String rep = representative ? " REPRESENTATIVE NODE" : "";
         return "\nNode:  " + value.toString() + "\nClass: " + head.getValue().toString() + rep + "\nRank: " + this.rank;
@@ -68,19 +76,23 @@ public class UnionFind <E>{
 
     private boolean finalized = false;
 
+    public UnionFind(){
+        // none
+    }
+
     // Specifies the maximum size of the elements contained within UnionFind.
     public void uandf(int n){
         sets = new UnionFindNode[n];
         numElements = n;
     }
 
-    public void make_set(E i){
+    public void make_set(E i) throws UnionFindException{
         if(!finalized){
 
             // We can only add as many elements as was specified in uandf; therefore, we check both that we still have
             // space to add an element, and also that uandf has already been called.
             if(numElements == null || counter >= numElements){
-                System.out.println("Invalid operation: check initialization function uandf and number of existing sets.");
+                throw new UnionFindException("Invalid operation: check initialization function uandf and number of existing sets.");
             }
             else{
                 indices.put(i, counter);
@@ -89,20 +101,24 @@ public class UnionFind <E>{
         }
     }
 
-    public void union_sets(E i, E j){
+    public void union_sets(E i, E j) throws UnionFindException {
         if(!finalized){
 
             // First need to check that each of these elements have been added to the UnionFind structure.
             Integer indexI = indices.get(i);
             Integer indexJ = indices.get(j);
             if(indexI == null || indexJ == null){
-                System.out.println("One or both of the elements was not contained in the collection.");
-                return;
+                throw new UnionFindException("One or both of the elements was not contained in the collection.");
             }
 
             // Retrieve the representatives from each of the sets contained i and j
             UnionFindNode iHead = getVeryHead(sets[indexI]);
             UnionFindNode jHead = getVeryHead(sets[indexJ]);
+
+            // If they are already in the same set, don't union.
+            if(iHead == jHead){
+                return;
+            }
 
             // We always make the smaller set point to the larger to reduce the size of the tree.
             // We adjust the rank in order to tell the relative tree sizes for future operations.
@@ -114,7 +130,6 @@ public class UnionFind <E>{
                 iHead.setHead(jHead);
                 jHead.setRank(iHead.getRank() + jHead.getRank());
             }
-
         }
     }
 
@@ -136,13 +151,12 @@ public class UnionFind <E>{
         return n;
     }
 
-    public UnionFindNode find_set(E i){
+    public UnionFindNode find_set(E i) throws UnionFindException{
 
         // Need to ensure that i has been added to our UnionFind structure.
         Integer index = indices.get(i);
         if(index == null){
-            System.out.println("Element was not contained in the collection.");
-            return null;
+            throw new UnionFindException("Element was not contained in the collection.");
         }
         return getVeryHead(sets[index]);
     }
@@ -197,25 +211,27 @@ public class UnionFind <E>{
         return toReturn;
     }
 
+
     public static void main(String[] args) {
         UnionFind<Integer> test = new UnionFind<>();
-        test.uandf(6);
-        test.make_set(1);
-        test.make_set(2);
-        test.make_set(3);
-//        test.make_set(4);
-        test.make_set(25);
-        test.make_set(26);
+        try{
+            test.uandf(6);
+            test.make_set(1);
+            test.make_set(2);
+            test.make_set(3);
+            test.make_set(25);
+            test.make_set(26);
 
-        test.union_sets(25, 26);
-        test.union_sets(1, 2);
-//        test.union_sets(4, 2);
-        test.union_sets(3, 25);
-//        System.out.println(test);
-        test.final_sets();
-        test.final_sets();
-        System.out.println(test);
+            test.union_sets(25, 26);
+            test.union_sets(1, 2);
+            test.union_sets(3, 25);
+            test.final_sets();
+            test.final_sets();
+            System.out.println(test);
 
-        System.out.println(test.find_set(25));
+            System.out.println(test.find_set(25));
+        } catch (UnionFindException e){
+            e.printStackTrace();
+        }
     }
 }
