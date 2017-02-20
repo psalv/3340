@@ -3,50 +3,61 @@ import java.util.ArrayList;
 public class MergeSort {
 
     public static <E extends Comparable> ArrayList<E> mergeSort(ArrayList<E> array){
-        int n = array.size();
+        int arraySize = array.size();
 
         // An empty array is sorted, as is an array of length 1.
-        if(n <= 1){
+        if(arraySize <= 1){
             return array;
         }
 
-        ArrayList<E> new1 = MergeSort.mergeSort(new ArrayList<E>(array.subList(0, n/2)));
-        ArrayList<E> new2 = MergeSort.mergeSort(new ArrayList<E>(array.subList(n/2, n)));
+        ArrayList<E> sortedArray1 = MergeSort.mergeSort(new ArrayList<E>(array.subList(0, arraySize/2)));
+        ArrayList<E> sortedArray2 = MergeSort.mergeSort(new ArrayList<E>(array.subList(arraySize/2, arraySize)));
 
-        return MergeSort.merge(new1, new2);
+        return MergeSort.merge(sortedArray1, sortedArray2);
 
     }
 
 
-    public static <E extends Comparable> ArrayList<E> merge(ArrayList<E> array1, ArrayList<E> array2){
-        int len1 = array1.size();
-        int len2 = array2.size();
+    // Merge simply merges to already sorted lists.
+    public static <E extends Comparable> ArrayList<E> merge(ArrayList<E> sortedArray1, ArrayList<E> sortedArray2){
+
+        // We know we are finished an array when our position matches it's size (have examined every element in the array)
+        int lenArray1 = sortedArray1.size();
+        int lenArray2 = sortedArray2.size();
+
+        // Keep track of our positions within each input array.
         int i = 0;
         int j = 0;
         int num = 0;
-        ArrayList<E> newArray = new ArrayList<E>();
+        ArrayList<E> mergedArray = new ArrayList<>();
 
-        while(num < len1 + len2){
+        while(num < lenArray1 + lenArray2){
 
-            if(i == len1){
-                newArray.add(array2.get(j++));
-                num++;
-            }
-            else if(j == len2){
-                newArray.add(array1.get(i++));
+            // If we've looked at every element in sortedArray1, add an element from sortedArray2
+            if(i == lenArray1){
+                mergedArray.add(sortedArray2.get(j++));
                 num++;
             }
 
-            else if(array1.get(i).compareTo(array2.get(j)) == -1){
-                newArray.add(array1.get(i++));
+            // If we've looked at every element in sortedArray2, add an element from sortedArray1
+            else if(j == lenArray2){
+                mergedArray.add(sortedArray1.get(i++));
                 num++;
             }
+
+            // If the next position in sortedArray1 is less than the next position in array 2, add the next position in sortedArray1
+            else if(sortedArray1.get(i).compareTo(sortedArray2.get(j)) == -1){
+                mergedArray.add(sortedArray1.get(i++));
+                num++;
+            }
+
+            // Otherwise add the next position from sortedArray2
             else {
-                newArray.add(array2.get(j++));
+                mergedArray.add(sortedArray2.get(j++));
                 num++;
             }
         }
-        return newArray;
+        return mergedArray;
     }
 
     public static void main(String[] args) {

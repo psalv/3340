@@ -55,14 +55,9 @@ class UnionFindNode<E extends Comparable<E>> implements Comparable<UnionFindNode
         return value.hashCode();
     }
 
-
-
     public int compareTo(UnionFindNode o) {
         return this.rank > o.getRank() ? 1 : this.rank < o.getRank() ? -1 : 0;
     }
-
-
-
 
     public String toString(){
         if(representative){
@@ -229,7 +224,6 @@ public class UnionFind <E extends Comparable>{
 
         return toReturn;
     }
-
 
     public static void main(String[] args) {
         UnionFind<Integer> test = new UnionFind<>();
