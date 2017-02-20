@@ -10,13 +10,13 @@ class UnionFindException extends Exception{
 }
 
 // A class to store information necessary for UnionFind to function.
-class UnionFindNode<E>{
+class UnionFindNode<E extends Comparable<E>> implements Comparable<UnionFindNode<E>>{
 
     // A head which points to the path to a representative for a set.
     // A class with a head pointer to itself indicates that the representative for this set is it's own value.
     private UnionFindNode head;
     private E value;
-    private int rank = 1;
+    private Integer rank = 1;
     private boolean representative = false;
 
     public UnionFindNode(E value) {
@@ -24,10 +24,11 @@ class UnionFindNode<E>{
         this.head = this;
     }
 
-    public UnionFindNode(E value, boolean rep) {
+    public UnionFindNode(E value, int rank) {
         this.value = value;
         this.head = this;
         this.representative = true;
+        this.rank = rank;
     }
 
     public E getValue() {
@@ -55,15 +56,24 @@ class UnionFindNode<E>{
     }
 
 
-    // todo
+
+    public int compareTo(UnionFindNode o) {
+        return this.rank > o.getRank() ? 1 : this.rank < o.getRank() ? -1 : 0;
+    }
+
+
+
+
     public String toString(){
-        String rep = representative ? " REPRESENTATIVE NODE" : "";
-        return "\nNode:  " + value.toString() + "\nClass: " + head.getValue().toString() + rep + "\nRank: " + this.rank;
+        if(representative){
+            return "Class: " + head.getValue().toString() + "\nRank: " + this.rank;
+        }
+        return "\nNode:  " + value.toString() + "\nClass: " + head.getValue().toString() + "\nRank: " + this.rank;
     }
 }
 
 
-public class UnionFind <E>{
+public class UnionFind <E extends Comparable>{
 
     private UnionFindNode sets[];
 
@@ -75,6 +85,7 @@ public class UnionFind <E>{
     private Integer numElements = null;
 
     private boolean finalized = false;
+    private UnionFindNode<Integer> finalHeads[];
 
     public UnionFind(){
         // none
@@ -188,8 +199,12 @@ public class UnionFind <E>{
 
         // We need to go through each set and reset their representatives to be integers.
         int i = numSets;
+        finalHeads = new UnionFindNode[numSets];
         for (UnionFindNode key : foundSets.keySet()) {
-            UnionFindNode<Integer> newRepresentative = new UnionFindNode<>(i--, true);
+            UnionFindNode<Integer> newRepresentative = new UnionFindNode<>(i--, key.getRank());
+
+            // We keep track of all representatives such that we can retrieve them later.
+            finalHeads[i] = newRepresentative;
             for (UnionFindNode val : foundSets.get(key)) {
                 val.setHead(newRepresentative);
             }
@@ -197,6 +212,10 @@ public class UnionFind <E>{
 
         // Finally return the number of unique sets that was found earlier.
         return numSets;
+    }
+
+    public UnionFindNode<Integer>[] getFinalHeads() {
+        return finalHeads;
     }
 
     public String toString(){
