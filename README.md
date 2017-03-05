@@ -5,3 +5,7 @@ Current data structures and algorithms implemented:
   - Radix Sort
   - Heap
   - Huffman Coding
+  - Merge Sort
+  - Red Black Tree (incomplete)
+  - Union Find
+  - Knuth-Morris-Pratt (incomplete)
