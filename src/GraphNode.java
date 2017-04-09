@@ -5,6 +5,7 @@ public class GraphNode {
     private String key;
     private HashMap<GraphNode, Integer> adjList = new HashMap<>();
     private boolean flag = false;
+    private int inDegree = 0;
 
     public GraphNode(String key) {
         this.key = key;
@@ -14,10 +15,20 @@ public class GraphNode {
         return key;
     }
 
+    public void incrementIn(){
+        this.inDegree++;
+    }
+
+    public boolean decreaseIn(){
+        this.inDegree--;
+        return this.inDegree == 0;
+    }
+
     public boolean addEdge(GraphNode n){
         if(adjList.containsKey(n)){
             return false;
         }
+        n.incrementIn();
         adjList.put(n, 0);
         return true;
     }
@@ -26,6 +37,7 @@ public class GraphNode {
         if(adjList.containsKey(n)){
             return false;
         }
+        n.incrementIn();
         adjList.put(n, w);
         return true;
     }
@@ -40,6 +52,10 @@ public class GraphNode {
 
     public void setFlag(boolean flag) {
         this.flag = flag;
+    }
+
+    public int getInDegree() {
+        return inDegree;
     }
 
     public void printAdj(){

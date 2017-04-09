@@ -16,3 +16,4 @@ Current data structures and algorithms implemented:
   - Graphs
     - BFS
     - DFS
+    - Topological Sort
