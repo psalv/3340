@@ -42,7 +42,6 @@ public class BFS {
         f.addEdge(e);
         e.addEdge(a);
 
-
         System.out.println(solveBFS(a, "c"));
     }
 }
