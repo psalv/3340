@@ -12,3 +12,4 @@ Current data structures and algorithms implemented:
   - Longest Common Subsequence
   - Dynamic Programming
     - Coin selection problem
+    - Knapsack problem
