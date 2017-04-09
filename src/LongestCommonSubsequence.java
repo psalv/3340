@@ -95,6 +95,6 @@ public class LongestCommonSubsequence {
     public static void main(String[] args) {
         LCS("skullandbones", "lullabybabies");
 
-        LCSSpaceOptimized("skullandbones", "lullabybabies");
+        LCSSpaceOptimized("skullandbones", "lullabybabullandies");
     }
 }
