@@ -10,7 +10,7 @@ public class DFS {
         seen.add(root);
         for(GraphNode n: root.getAdjList().keySet()){
             if(!seen.contains(n)){
-                if(DFS(n, endKey, seen)){
+                if(DFS(n, endKey , seen)){
                     return true;
                 }
             }

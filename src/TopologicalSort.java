@@ -1,13 +1,17 @@
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.LinkedList;
 
 public class TopologicalSort {
 
-    public static void doTopologicalSort(GraphNode[] nodes){
+    public static boolean doTopologicalSort(GraphNode[] nodes){
         LinkedList<GraphNode> queue = new LinkedList<>();
+        HashSet<GraphNode> seen = new HashSet<>();
+
         for(GraphNode n: nodes){
             if(n.getInDegree() == 0){
                 queue.addLast(n);
+                seen.add(n);
             }
         }
 
@@ -16,16 +20,24 @@ public class TopologicalSort {
             GraphNode cur = queue.removeFirst();
             nodes[pos++] = cur;
             for(GraphNode n: cur.getAdjList().keySet()){
+                if(seen.contains(n)){
+                    System.out.println("Cycle found, topological sorting requires a directed acyclic graph.");
+                    return false;
+                }
                 if(n.decreaseIn()){
                     queue.addLast(n);
+                    seen.add(n);
                 }
             }
         }
 
+        if(pos != nodes.length){
+            System.out.println("Processing incomplete, topological sorting requires a directed acyclic graph.");
+            return false;
+        }
+
         System.out.println(Arrays.toString(nodes));
-
-
-
+        return true;
     }
 
 
@@ -42,6 +54,7 @@ public class TopologicalSort {
         a.addEdge(b);
         a.addEdge(c);
         a.addEdge(d);
+        a.addEdge(f);
         b.addEdge(c);
         b.addEdge(f);
         c.addEdge(e);
