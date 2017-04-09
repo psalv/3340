@@ -3,13 +3,15 @@ Data structures and algorithms learned in CS3340 Analysis of Algorithms.
 
 Current data structures and algorithms implemented:
   - Radix Sort
-  - Heap
+  - Min Heap
   - Huffman Coding
   - Merge Sort
   - Red Black Tree (incomplete)
   - Union Find
   - Knuth-Morris-Pratt (incomplete)
-  - Longest Common Subsequence
   - Dynamic Programming
-    - Coin selection problem
-    - Knapsack problem
+    - Coin Selection Problem
+    - Knapsack Problem
+    - Longest Common Subsequence
+  - Graphs
+    - BFS (incomplete)
