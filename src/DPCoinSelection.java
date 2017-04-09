@@ -1,7 +1,5 @@
 
 // todo: implement with a generic class
-// todo: change solveCoin to use
-
 
 public class DPCoinSelection {
 
