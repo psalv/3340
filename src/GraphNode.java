@@ -1,9 +1,9 @@
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class GraphNode {
 
     private String key;
-    private ArrayList<GraphEdge> adjList = new ArrayList<>();
+    private HashMap<GraphNode, Integer> adjList = new HashMap<>();
     private boolean flag = false;
 
     public GraphNode(String key) {
@@ -14,11 +14,23 @@ public class GraphNode {
         return key;
     }
 
-    public void addEdge(GraphEdge e){
-        adjList.add(e);
+    public boolean addEdge(GraphNode n){
+        if(adjList.containsKey(n)){
+            return false;
+        }
+        adjList.put(n, 0);
+        return true;
     }
 
-    public ArrayList<GraphEdge> getAdjList() {
+    public boolean addEdge(GraphNode n, int w){
+        if(adjList.containsKey(n)){
+            return false;
+        }
+        adjList.put(n, w);
+        return true;
+    }
+
+    public HashMap<GraphNode, Integer> getAdjList() {
         return adjList;
     }
 
@@ -32,9 +44,13 @@ public class GraphNode {
 
     public void printAdj(){
         System.out.println("Adjacency list for: " + this.key);
-        for(GraphEdge e: adjList){
-            System.out.println("\t" + e.getOpposite(this));
+        for(GraphNode n: adjList.keySet()){
+            System.out.println("\t" + n.getKey() + " w: " + adjList.get(n));
         }
+    }
+
+    public int hashCode(){
+        return key.hashCode();
     }
 
     public String toString(){
