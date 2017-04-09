@@ -1,29 +1,48 @@
-import java.util.ArrayList;
+
+// todo: implement with a generic class
+// todo: change solveCoin to use
+
 
 public class DPCoinSelection {
 
 
-    public static boolean solveCoin(ArrayList<Integer> coins, int totalVal){
-        for(int curVal = 0; curVal <= totalVal; curVal++){
-            for(int coin = coins.size() - 1; coin > 0; coin--){
-                if(coins.contains(curVal - coins.get(coin))){
-                    coins.add(curVal);
-                    break;
+    public static boolean solveCoin(int[] coins, int totalVal){
+        int[] memo = new int[totalVal + 1];
+        memo[0] = 1;
+        for(int curVal = 1; curVal <= totalVal; curVal++){
+            for(int coin = coins.length - 1; coin >= 0; coin--){
+                try {
+                    if (memo[curVal - coins[coin]] == 1) {
+                        memo[curVal] = 1;
+                        break;
+                    }
+                } catch (ArrayIndexOutOfBoundsException e){
+                    // none
                 }
             }
         }
-        return coins.contains(totalVal);
+        if(memo[totalVal] == 1){
+            printCoins(coins, memo, totalVal);
+            return true;
+        }
+
+        System.out.println("No solution possible.");
+        return false;
     }
 
 
-    public static void printCoins(ArrayList<Integer> coins, ArrayList<Integer> coinsMemo, int totalVal){
+    public static void printCoins(int[] coins, int[] coinsMemo, int totalVal){
         while(totalVal > 0){
-            for(int coin = coins.size() - 1; coin >= 0; coin--){
-                int cur = totalVal - coins.get(coin);
-                if(cur >= 0 && (coinsMemo.contains(cur) || cur == 0)){
-                    System.out.println(coins.get(coin));
-                    totalVal -= coins.get(coin);
-                    break;
+            for(int coin = coins.length - 1; coin >= 0; coin--){
+                try {
+                    int cur = totalVal - coins[coin];
+                    if (cur >= 0 && (coinsMemo[cur] == 1 || cur == 0)) {
+                        System.out.println(coins[coin]);
+                        totalVal -= coins[coin];
+                        break;
+                    }
+                } catch(ArrayIndexOutOfBoundsException e){
+                    // none
                 }
             }
         }
@@ -31,19 +50,11 @@ public class DPCoinSelection {
 
 
     public static void main(String[] args) {
-        ArrayList<Integer> coins = new ArrayList<>();
-        coins.add(5);
-        coins.add(10);
-        coins.add(25);
-        coins.add(100);
 
         int val = 280;
+        int[] coins = {5, 10, 25, 100};
 
-        ArrayList<Integer> coinsCopy = (ArrayList)coins.clone();
-
-        if(solveCoin(coinsCopy, val)){
-            printCoins(coins, coinsCopy, val);
-        }
+        solveCoin(coins, val);
 
     }
 }

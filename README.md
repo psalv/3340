@@ -10,3 +10,5 @@ Current data structures and algorithms implemented:
   - Union Find
   - Knuth-Morris-Pratt (incomplete)
   - Longest Common Subsequence
+  - Dynamic Programming
+    - Coin selection problem
