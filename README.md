@@ -15,3 +15,4 @@ Current data structures and algorithms implemented:
     - Longest Common Subsequence
   - Graphs
     - BFS
+    - DFS
