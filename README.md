@@ -14,4 +14,4 @@ Current data structures and algorithms implemented:
     - Knapsack Problem
     - Longest Common Subsequence
   - Graphs
-    - BFS (incomplete)
+    - BFS
