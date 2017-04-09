@@ -9,12 +9,6 @@ public class LongestCommonSubsequence {
 
         // Initializing memo
         int[][] memo = new int[x.length() + 1][y.length() + 1];
-        for(int i = 0; i < x.length(); i++){
-            memo[i][0] = 0;
-        }
-        for(int j = 0; j < y.length(); j++){
-            memo[0][j] = 0;
-        }
 
         for(int i = 1; i < x.length() + 1; i++){
 
@@ -62,9 +56,6 @@ public class LongestCommonSubsequence {
 
         // Initializing memo
         int[] memo = new int[x.length() + 1];
-        for(int i = 0; i < x.length(); i++){
-            memo[0] = 0;
-        }
 
         for(int i = 1; i < x.length() + 1; i++){
 
