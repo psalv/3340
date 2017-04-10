@@ -1,11 +1,8 @@
 import java.util.Arrays;
 import java.util.HashMap;
 
-/**
- * Created by paulsalvatore57 on 2017-04-10.
- */
-public class FloydWarshall {
 
+public class FloydWarshall {
 
 
     public static Integer[][] floydwarshall(GraphNode[] vertices){
@@ -20,6 +17,8 @@ public class FloydWarshall {
             for(GraphNode y: vertices) {
                 if(adj.containsKey(y)){
                     d[i][j] = adj.get(y);
+                } else if (i == j){
+                    d[i][i] = 0;
                 } else {
                     d[i][j] = Integer.MAX_VALUE / 2 - 1;
                 }
@@ -28,16 +27,11 @@ public class FloydWarshall {
             i++;
         }
 
-        for(int x = 0; x < num; x++){
-            d[x][x] = 0;
-        }
-
         for(int m = 0; m < num; m++) {
             for (int x = 0; x < num; x++) {
                 for (int y = 0; y < num; y++) {
                     if(d[x][m] + d[m][y] < d[x][y]){
                         d[x][y] = d[x][m] + d[m][y];
-//                        System.out.println('c');
                     }
                 }
             }
