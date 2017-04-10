@@ -19,3 +19,4 @@ Current data structures and algorithms implemented:
     - Topological Sort
     - Dijkstra
     - Bellman Ford
+    - Prims MST

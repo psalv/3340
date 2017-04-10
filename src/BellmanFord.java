@@ -1,4 +1,3 @@
-import java.util.HashSet;
 
 public class BellmanFord {
 
@@ -39,8 +38,8 @@ public class BellmanFord {
 
         for(GraphNode n: vertices){
             System.out.println("\n" + n);
-            System.out.println("\t" + n.getD());
-            System.out.println("\t" + n.getPi());
+            System.out.println("\t D: " + n.getD());
+            System.out.println("\tPi: " + n.getPi());
         }
 
     }
@@ -70,8 +69,6 @@ public class BellmanFord {
         b.addEdge(d, 1);
         d.addEdge(c, 1);
         c.addEdge(b, -3);
-
-
 
         GraphNode[] vertices = {a, b, c, d, e, f};
 

@@ -1,6 +1,6 @@
 import java.util.HashMap;
 
-public class GraphNode extends HasKey{
+public class GraphNode extends HasKey {
 
     private String key;
     private HashMap<GraphNode, Integer> adjList = new HashMap<>();
@@ -36,12 +36,33 @@ public class GraphNode extends HasKey{
         return true;
     }
 
+
     public boolean addEdge(GraphNode n, int w){
         if(adjList.containsKey(n)){
             return false;
         }
         n.incrementIn();
         adjList.put(n, w);
+        return true;
+    }
+
+    public boolean addUndirectedEdge(GraphNode n){
+        if(adjList.containsKey(n)){
+            return false;
+        }
+        n.incrementIn();
+        adjList.put(n, 0);
+        n.addEdge(this);
+        return true;
+    }
+
+    public boolean addUndirectedEdge(GraphNode n, int w){
+        if(adjList.containsKey(n)){
+            return false;
+        }
+        n.incrementIn();
+        adjList.put(n, w);
+        n.addEdge(this, w);
         return true;
     }
 

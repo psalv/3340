@@ -13,6 +13,12 @@ public class Dijkstra {
         return false;
     }
 
+    /**
+     * Note: inefficient heap update method, currently rebuilds the entire heap taking O(nlgn) time.
+     * Therefore this algorithm will take O( (|V| + |E|) * |V|*lg(|V|)) time as is.
+     *
+     * With an efficient implementation this will only take O( (|V| + |E|) * lg(|V|) ) time.
+     */
     public static void dijkstra(GraphNode[] vertices, GraphNode source){
         for(GraphNode n: vertices){
             n.setD(Integer.MAX_VALUE);
@@ -39,8 +45,8 @@ public class Dijkstra {
 
         for(GraphNode n: vertices){
             System.out.println("\n" + n);
-            System.out.println("\t" + n.getD());
-            System.out.println("\t" + n.getPi());
+            System.out.println("\t D: " + n.getD());
+            System.out.println("\tPi: " + n.getPi());
         }
 
     }
