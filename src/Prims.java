@@ -33,17 +33,14 @@ public class Prims {
                 if(!connectedVertices.contains(v) && u.getAdjList().get(v) < v.getIntKey()){
                     v.setPi(u);
                     v.setD(u.getAdjList().get(v));
-                    heap.update();
                 }
             }
 
+            heap.update();
+
             // Print edges that are set as vertices are taken out, since these pi values are finalized.
-            try {
-                System.out.println("\nEdge from " + u + " to " + u.getPi() + "\n   Weight: " + u.getAdjList().get(u.getPi()));
-            }
-            catch(NullPointerException e){
-                // none
-            }
+            System.out.println("\nEdge from " + u + " to " + u.getPi() + "\n   Weight: " + u.getAdjList().get(u.getPi()));
+
         }
     }
 
