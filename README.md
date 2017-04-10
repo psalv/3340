@@ -12,6 +12,7 @@ Current data structures and algorithms implemented:
   - Dynamic Programming
     - Coin Selection Problem
     - Knapsack Problem
+    - Longest Common Sequence
     - Longest Common Subsequence
   - Graphs
     - BFS
@@ -21,3 +22,4 @@ Current data structures and algorithms implemented:
     - Bellman Ford
     - Prim's MST
     - Floyd-Warshall
+  - Ford-Fulkerson

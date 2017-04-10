@@ -1,100 +1,65 @@
-
+import java.util.Arrays;
 
 public class LongestCommonSubsequence {
 
-    public static String LCS(String x, String y){
 
-        int longestSequence = 0;
-        int longestIndexInX = -1;
+    public static void printLCS(Integer[][] memo, String st1, String st2){
+        int x = st1.length();
+        int y = st2.length();
+        int index = memo[y - 1][x - 1];
+        char[] build = new char[index + 1];
+        while(x > 1 && y > 1){
+            if(st1.charAt(x - 1) == st2.charAt(y - 1)){
+                build[index] = st1.charAt(x-1);
+                x--;
+                y--;
+                index--;
+            } else if (memo[x-1][y] > memo[x][y-1]){
+                x--;
+            } else{
+                y--;
+            }
+        }
+
+        String lcs = "";
+        for(char c: build){
+            lcs += c;
+        }
+        System.out.println("\t" + lcs);
+
+    }
+
+    public static void LCS(String x, String y){
 
         // Initializing memo
-        int[][] memo = new int[x.length() + 1][y.length() + 1];
+        Integer[][] memo = new Integer[x.length() + 1][y.length() + 1];
+        for(int i = 0; i <= x.length(); i++){
+            memo[i][0] = 0;
+        }
+        for(int j = 0; j <= y.length(); j++){
+            memo[0][j] = 0;
+        }
 
-        for(int i = 1; i < x.length() + 1; i++){
+        for(int i = 1; i <= x.length(); i++){
 
-            for(int j = 1; j < y.length(); j++){
+            for(int j = 1; j <= y.length(); j++){
 
                 if(x.charAt(i - 1) == y.charAt(j - 1)){
-
-                    int temp = 1 + memo[i - 1][j - 1];
-                    if(temp > longestSequence){
-                        longestSequence = temp;
-                        longestIndexInX = i;
-                    }
-
-                    memo[i][j] = temp;
+                    memo[i][j] = 1 + memo[i - 1][j - 1];
+                } else {
+                    memo[i][j] = Math.max(memo[i][j - 1], memo[i - 1][j]);
                 }
             }
         }
 
-        if(longestIndexInX == -1){
-            System.out.println("No subsequence match found.");
-            return null;
-        }
-        else{
-            System.out.println("Longest subsequence of size: " + longestSequence);
-        }
+        System.out.println(String.format("LCS is %d characters long.", memo[memo.length - 1][memo[0].length - 1]));
 
-        String buildLongest = "";
-        for(int c = 0; c < longestSequence; c++){
-            buildLongest += x.charAt(longestIndexInX - longestSequence + c);
-        }
+        printLCS(memo, x, y);
 
-        System.out.println("Longest subsequence: " + buildLongest);
-
-        return buildLongest;
     }
 
-    /**
-     * Rather than taking up polynomial space, this algorithm can take up linear space in the size of one of the strings.
-     * Ideally, the first string parameter, x, would be the shorter string to optimize space further.
-     */
-    public static String LCSSpaceOptimized(String x, String y){
-
-        int longestSequence = 0;
-        int longestIndexInX = -1;
-
-        // Initializing memo
-        int[] memo = new int[x.length() + 1];
-
-        for(int i = 1; i < x.length() + 1; i++){
-
-            for(int j = 1; j < y.length(); j++){
-
-                if(x.charAt(i - 1) == y.charAt(j - 1)){
-
-                    int temp = 1 + memo[i - 1];
-                    if(temp > longestSequence){
-                        longestSequence = temp;
-                        longestIndexInX = i;
-                    }
-
-                    memo[i] = temp;
-                }
-            }
-        }
-
-        if(longestIndexInX == -1){
-            System.out.println("No subsequence match found.");
-            return null;
-        }
-        else{
-            System.out.println("Longest subsequence of size: " + longestSequence);
-        }
-
-        String buildLongest = "";
-        for(int c = 0; c < longestSequence; c++){
-            buildLongest += x.charAt(longestIndexInX - longestSequence + c);
-        }
-
-        System.out.println("Longest subsequence: " + buildLongest);
-
-        return buildLongest;
-    }
 
     public static void main(String[] args) {
         LCS("skullandbones", "lullabybabies");
-
-        LCSSpaceOptimized("skullandbones", "lullabybabullandies");
     }
 }
