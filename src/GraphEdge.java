@@ -37,6 +37,6 @@ public class GraphEdge {
     }
 
     public String toString() {
-        return "Edge: " + u.getKey() + " " + v.getKey();
+        return "Edge: " + u.getIntKey() + " " + v.getIntKey();
     }
 }

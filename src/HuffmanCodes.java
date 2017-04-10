@@ -37,7 +37,7 @@ class HasKeyCharacter extends HasKey{
     }
 
     public String toString(){
-        return value == null ? "JOINT" + getKey() : value.toString() + getKey();
+        return value == null ? "JOINT" + getIntKey() : value.toString() + getIntKey();
     }
 }
 
@@ -128,13 +128,13 @@ public class HuffmanCodes {
                     loop = false;
                 }
 
-                z = new HasKeyCharacter(a.getKey() + b.getKey(), a, b);
+                z = new HasKeyCharacter(a.getIntKey() + b.getIntKey(), a, b);
                 heap.insert(z);
 
             }
             catch(IndexOutOfBoundsException e){
                 loop = false;
-                z = new HasKeyCharacter(a.getKey(), a, null);
+                z = new HasKeyCharacter(a.getIntKey(), a, null);
                 heap.insert(z);
             }
         }

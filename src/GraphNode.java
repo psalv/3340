@@ -1,13 +1,16 @@
 import java.util.HashMap;
 
-public class GraphNode {
+public class GraphNode extends HasKey{
 
     private String key;
     private HashMap<GraphNode, Integer> adjList = new HashMap<>();
     private boolean flag = false;
     private int inDegree = 0;
+    private Integer d = null;
+    private GraphNode pi = null;
 
     public GraphNode(String key) {
+        super(null);
         this.key = key;
     }
 
@@ -63,6 +66,23 @@ public class GraphNode {
         for(GraphNode n: adjList.keySet()){
             System.out.println("\t" + n.getKey() + " w: " + adjList.get(n));
         }
+    }
+
+    public Integer getD() {
+        return d;
+    }
+
+    public void setD(Integer d) {
+        this.setIntKey(d);
+        this.d = d;
+    }
+
+    public GraphNode getPi() {
+        return pi;
+    }
+
+    public void setPi(GraphNode pi) {
+        this.pi = pi;
     }
 
     public int hashCode(){

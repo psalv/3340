@@ -15,7 +15,7 @@ public class RadixSort {
         for (int i = 0; i < digits; i++) {
             if (first) {
                 for (E k : data) {
-                    int key = k.getKey() % 10;
+                    int key = k.getIntKey() % 10;
 
                     if (sorted[key] == null) {
                         sorted[key] = new ArrayList<>();
@@ -32,7 +32,7 @@ public class RadixSort {
                         Iterator<E> iter = sorted[j].iterator();
                         while (iter.hasNext()) {
                             E k = iter.next();
-                            int key = (int) (k.getKey() / (Math.pow(10, i))) % 10;
+                            int key = (int) (k.getIntKey() / (Math.pow(10, i))) % 10;
 
                             if (pointer[key] == null) {
                                 pointer[key] = new ArrayList<>();

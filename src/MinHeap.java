@@ -35,7 +35,7 @@ public class MinHeap<E extends HasKey> {
         // we need only look at the parent.
         // If the new node is less than the parent, than it is also less than any of the children's parents.
         // We can therefore swap the parent and the new node.
-        if(heap.get(parent).getKey() > heap.get(i).getKey()){
+        if(heap.get(parent).getIntKey() > heap.get(i).getIntKey()){
             E temp = heap.get(parent);
             heap.set(parent, heap.get(i));
             heap.set(i, temp);
@@ -56,10 +56,10 @@ public class MinHeap<E extends HasKey> {
         }
 
         // Need to determine the smallest element between i and it's two children
-        int smallest = heap.get(left).getKey() < heap.get(i).getKey() ? left : i;
+        int smallest = heap.get(left).getIntKey() < heap.get(i).getIntKey() ? left : i;
 
         if(right <= size) {
-            smallest = heap.get(right).getKey() < heap.get(smallest).getKey() ? right : smallest;
+            smallest = heap.get(right).getIntKey() < heap.get(smallest).getIntKey() ? right : smallest;
         }
 
         // If the children are smaller we need to swap and recurse upwards.
@@ -86,6 +86,16 @@ public class MinHeap<E extends HasKey> {
         return min;
     }
 
+    public void update(){
+        for(int i = this.size() - 1; i > this.size()/2 - 1; i--){
+            buildMinHeapify(i);
+        }
+    }
+
+    public int size(){
+        return this.heap.size();
+    }
+
     // Viewing the min takes O(1).
     public E getMin(){
         return heap.get(0);
@@ -98,7 +108,6 @@ public class MinHeap<E extends HasKey> {
     public String toString(){
         return heap.toString();
     }
-
 
 
     public static void main(String[] args) {

@@ -1,16 +1,20 @@
 
 class HasKey{
-    private Integer key;
+    private Integer intKey;
 
-    public HasKey(int key) {
-        this.key = key;
+    public HasKey(Integer intKey) {
+        this.intKey = intKey;
     }
 
-    public int getKey(){
-        return this.key;
+    public int getIntKey(){
+        return this.intKey;
+    }
+
+    public void setIntKey(Integer intKey) {
+        this.intKey = intKey;
     }
 
     public String toString(){
-        return key.toString();
+        return intKey.toString();
     }
 }
