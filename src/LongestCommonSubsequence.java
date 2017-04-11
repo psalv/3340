@@ -1,7 +1,5 @@
-import java.util.Arrays;
 
 public class LongestCommonSubsequence {
-
 
     public static void printLCS(Integer[][] memo, String st1, String st2){
         int x = st1.length();
@@ -58,8 +56,8 @@ public class LongestCommonSubsequence {
 
     }
 
-
     public static void main(String[] args) {
         LCS("skullandbones", "lullabybabies");
     }
+
 }

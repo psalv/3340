@@ -22,4 +22,3 @@ Current data structures and algorithms implemented:
     - Bellman Ford
     - Prim's MST
     - Floyd-Warshall
-  - Ford-Fulkerson
