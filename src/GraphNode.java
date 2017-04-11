@@ -23,8 +23,7 @@ public class GraphNode extends HasKey {
     }
 
     public boolean decreaseIn(){
-        this.inDegree--;
-        return this.inDegree == 0;
+        return --this.inDegree == 0;
     }
 
     public boolean addEdge(GraphNode n){
