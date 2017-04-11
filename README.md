@@ -9,6 +9,7 @@ Current data structures and algorithms implemented:
   - Red Black Tree (incomplete)
   - Union Find
   - Knuth-Morris-Pratt (incomplete)
+  - Select K Smallest using Median of Medians
   - Dynamic Programming
     - Coin Selection Problem
     - Knapsack Problem

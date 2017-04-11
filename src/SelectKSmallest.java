@@ -54,21 +54,22 @@ public class SelectKSmallest {
         }
 
         int numFives = ((Double)Math.floor(S.length/5)).intValue();
-        int[] five = new int[numFives];
+        int[] medians = new int[numFives];
         int pos = 0;
         for(int i = 0; i < numFives; i++){
-            five[i] = fiveMedian(S, pos);
+            medians[i] = fiveMedian(S, pos);
             pos += 5;
         }
 
-        return medianOfMedians(five);
+        return medianOfMedians(medians);
     }
 
     public static int selectKSmallest(int[] S, int k){
+
         int med = medianOfMedians(S);
         int numBelow = 0;
         for(int s: S){
-            if(s <= med){
+            if(s < med){
                 numBelow++;
             }
         }
@@ -77,7 +78,7 @@ public class SelectKSmallest {
         int s1Pos = 0;
         int s2Pos = 0;
         for(int s: S){
-            if(s <= med){
+            if(s < med){
                 s1[s1Pos++] = s;
             } else {
                 s2[s2Pos++] = s;
@@ -95,13 +96,11 @@ public class SelectKSmallest {
     }
 
 
-    //todo why do some numbers not work?
     public static void main(String[] args) {
-        int[] input = {32, 45, 1, 3, 21, 321, -32, 45, 231, 433, 8, 77, 543, 2, 23, 3, 9042, -2192, 43, 123, 77};
+        int[] input = {32, 45, 1, 3, 21, 321, -32, 231, 433, 8, 543, 2, 23, 9042, -2192, 43, 123, 77};
 
-        System.out.println(Arrays.toString(intMergeSort(input)));
         for(int i = 0; i<input.length; i++){
-            System.out.println(selectKSmallest(input, i));
+            System.out.println(String.format("\nThe %dth smallest element: %d", i, selectKSmallest(input, i)));
         }
 
     }
