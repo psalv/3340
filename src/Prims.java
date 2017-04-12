@@ -3,6 +3,7 @@ import java.util.HashSet;
 
 public class Prims {
 
+    // Operates in O((V + E)lgV) time with efficient heap implementation.
     private static void prims(GraphNode[] vertices){
         MinHeap<GraphNode> heap = new MinHeap<>();
 
