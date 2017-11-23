@@ -20,11 +20,9 @@ public class BellmanFord {
         }
         source.setD(0);
 
-        for(int i = 0; i < vertices.length; i++){
-            for(GraphNode u: vertices){
-                for(GraphNode v: u.getAdjList().keySet()){
-                    relax(u, v, u.getAdjList().get(v));
-                }
+        for(GraphNode u: vertices){
+            for(GraphNode v: u.getAdjList().keySet()){
+                relax(u, v, u.getAdjList().get(v));
             }
         }
 
